@@ -1,0 +1,39 @@
+AMATH 583 - Problem Set #1
+Written By: Edwin Rainville, Spring 2021(04-05-21)
+
+1. What is the host name of the computer as reported by your linux environment? 
+(You will need to find the right Linux command to execute for this. I suggest searching the web.)
+    The host name of the linux environment that I am working on is "EJs-MacBook-Pro.local" which was 
+    found from the command line using the command "hostname." This command was found online at the 
+    URL: https://www.cyberciti.biz/faq/find-my-linux-machine-name/. 
+
+2. How would you specify the name of an output file when you use the compiler if 
+you wanted the executable to have a name other than a.out?
+    When compiling a C++ program into an executable program, the standard output will be "a.out." However, 
+    the "-o" flag can be used after the filename that is being compiled and then an executable filename can 
+    be defined after that. An example of this command is "c++ hello.cpp -o hello" which would now compile 
+    the file named "hello.cpp" and create an executable named "hello" that would be located in the same 
+    directory. This information was found on the manual entry for clang. 
+
+3. What happens if you type a.out instead of ./a.out to run your program? What is the difference (operationally) between the two statements?
+    If you type "a.out" instead of "./a.out" then the shell outputs that the command is not found. The difference between the two statements
+    is that "./a.out" is stating to look in the current directory, specified by ".", and then run the program "a.out" that is contained in 
+    the current directory. However, just using the command "a.out" states to run that command which is not a real command. 
+
+4.  What does clang print when you run c++ --version (AL: note two dashes.)?
+    When you run the command "c++ --version" the output is given as the following: 
+    Apple clang version 12.0.0 (clang-1200.0.32.29)
+    Target: x86_64-apple-darwin20.3.0
+    Thread model: posix
+    InstalledDir: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin
+    This gives us the information about what version of the c++ language is installed, in this case I have 
+    version 12.0.0 installed. It also gives the Target which is x86_64-apple-darwin20.3.0 for this system and it means that the c++ compiler will compile
+    the .cpp program into x86 assembly language which is specific to this system(source:https://softwareengineering.stackexchange.com/questions/344599/what-exactly-is-a-compile-target). 
+    The Thread model which is a posix thread for this system is a type of execution model that allows for multiple processes. Finally, this command 
+    tells us the path to where the language is installed on the system.
+
+5. In the example program, the i and N variables are said to be size_t. What is a size_t?
+    The variables i and N are size_t which is a variable type in the c++ language that when used in initializing a variable. By declaring the type of the 
+    variable as size_t, it makes the variable so that it "can store the maximum size of a theoretically possible object of any type" as definded from 
+    cppreference.com. This means that any variable that is initialized as size_t can be a very long unsigned integer that can be the size of the longest 
+    array possible so it is a very useful type for indexing.
