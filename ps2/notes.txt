@@ -1,0 +1,4 @@
+Notes for Problem Set #2
+
+1. The assertion that prints Hello World is assert1.exe, this is because NDEBUG is defined before the <cassert> package is applied therefore the assertion 
+is not caught.
