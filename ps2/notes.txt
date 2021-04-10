@@ -2,3 +2,10 @@ Notes for Problem Set #2
 
 1. The assertion that prints Hello World is assert1.exe, this is because NDEBUG is defined before the <cassert> package is applied therefore the assertion 
 is not caught.
+
+
+Exercises: 
+5.1: Added -DNDEBUG to assert3.exe makefile rule so the assertion is not triggered.
+
+5.2: Hello World!
+    Added hello_world.cpp file to directory and it outputs "I am 3.2 kilometers from Lewis Hall"
