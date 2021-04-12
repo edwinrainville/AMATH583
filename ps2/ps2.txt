@@ -1,0 +1,5 @@
+Problem Set #2 Questions 
+Written By: EJ Rainville, Spring 2021
+
+1. How would you use dot to implement two_norm?
+    

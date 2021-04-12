@@ -9,3 +9,7 @@ Exercises:
 
 5.2: Hello World!
     Added hello_world.cpp file to directory and it outputs "I am 3.2 kilometers from Lewis Hall"
+
+5.3 Zeroize:
+    Not sure how to not use a for loop for this section. Index through each element and set to zero, this seems like a slow way
+    to do this procedure, what does the void type do for a function? 

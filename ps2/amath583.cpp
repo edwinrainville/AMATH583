@@ -14,33 +14,45 @@
 #include <cmath>
 #include <cstddef>
 
-void zeroize(/* WRITE ME */) {
-  // WRITE ME
+void zeroize(Vector& x) {
+  for (size_t i = 0 ; i < x.num_rows() ; ++i) {
+    x(i) = 0;
+  }
 }
 
 double one_norm(const Vector& x) {
-  // WRITE ME
   double sum = 0.0;
-
+  for (size_t i = 0; i < x.num_rows(); ++i) {
+    sum += std::abs(x(i));
+  }
   return sum;
 }
 
 double two_norm(const Vector& x) {
-  // WRITE ME
-  return /* FIX ME */ -1.0;
+  double sum = 0.0;
+  for (size_t i =0; i < x.num_rows(); ++i) {
+    sum += x(i) * x(i);
+  }
+  double sum_sqrt = std::sqrt(sum);
+  return sum_sqrt;
 }
 
 double inf_norm(const Vector& x) {
   double result = 0.0;
-  // WRITE ME
-
+  for (size_t i = 0; i < x.num_rows(); ++i) {
+    if (result < x(i)){
+      result = x(i);
+    }
+  }
   return result;
 }
 
 double dot(const Vector& x, const Vector& y) {
-  // WRITE ME
-
-  return /* FIX ME */ 0.0;
+  double sum = 0.0;
+  for (size_t i = 0; i < x.num_rows(); ++i) { 
+    sum += x(i) * y(i);
+  }
+  return sum;
 }
 
 double two_norm_d(const Vector& x) { 
