@@ -19,8 +19,7 @@ void   zeroize(Vector& x);
 double one_norm(const Vector& x);
 double two_norm(const Vector& x);
 double inf_norm(const Vector& x);
-
-// Also need to add dot()
+double dot(const Vector& x, const Vector& y);
 // and optionally two_norm_d()
 
 
