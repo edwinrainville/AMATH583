@@ -2,8 +2,11 @@ Problem Set #2 Questions
 Written By: EJ Rainville, Spring 2021
 
 1. How would you use dot to implement two_norm?
-
+    The dot product is very closely related to the two-norm by a square root of the dot product of a vector with itself. The two norm is defined as the 
+    root-sum-square of a vector and the dot product is defined  
 
 2. What is the formula that we would use for indexing if we wanted “slab-major” ordering? Hint: What is the size of a slab? It might be helpful to draw a picture of the data in 3D and see what the size is of a slab.
+
+
 
 3. (Extra credit.) I claim that there are six distinct indexing formulas. Show that this claim is correct or that it is incorrect.

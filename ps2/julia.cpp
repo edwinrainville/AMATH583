@@ -17,8 +17,8 @@
 using namespace cimg_library;
 
 int                  scale   = 1024;
-double               stretch = 2.5;
-std::complex<double> origin{0.0, 0.0};
+double               stretch = 100;
+std::complex<double> origin{-200, 45};
 
 std::complex<double> xy_to_complex(int ix, int iy) {
   std::complex<double> v = {double(ix) / double(scale) - 0.5, double(iy) / double(scale) - 0.5};
