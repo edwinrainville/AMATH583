@@ -56,8 +56,8 @@ double dot(const Vector& x, const Vector& y) {
 }
 
 double two_norm_d(const Vector& x) { 
-  // WRITE ME / FIX ME -- can you make the function only one line long including return?
-  return 0.0;  
+  double sum_sqrt = std::sqrt(dot(x, x));
+  return sum_sqrt;  
 }
 
 double one_norm(const Matrix& A) {
@@ -72,11 +72,26 @@ double one_norm(const Matrix& A) {
   return sum;
 }
 
-
 double inf_norm(const Matrix& A) {
   double sum = 0.0;
-  // WRITE ME
+  for (size_t i = 0; i < A.num_rows(); ++i) {
+    double tmp = 0.0;
+    for (size_t j = 0; j < A.num_cols(); ++j) {
+      tmp += std::abs(A(i, j));
+    }
+    sum = std::max(sum, tmp);
+  }
   return sum;
 }
 
-// WRITE ME f_norm()
+double f_norm(const Matrix& A) {
+  double sum = 0.0;
+  for (size_t j = 0; j < A.num_cols(); ++j) {
+    for (size_t i = 0; i < A.num_rows(); ++i) {
+      sum += std::pow(A(i, j), 2);
+    }
+  }
+  double sum_sqrt = std::sqrt(sum);
+  return sum_sqrt;
+}
+

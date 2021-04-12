@@ -25,8 +25,8 @@ std::complex<double> xy_to_complex(int ix, int iy) {
   return v * stretch + origin;
 }
 
-std::complex<double> f(std::complex<double> x)  { return /* FIX ME */ 1.0; }  // f(x) = x^5 + 5.0 * x^3 - 13.0
-std::complex<double> fp(std::complex<double> x) { return /* FIX ME */ 1.0; }  // derivative of f
+std::complex<double> f(std::complex<double> x)  { return std::pow(x, 5) + (5.0 * std::pow(x, 3)) - 13.0; }  // f(x) = x^5 + 5.0 * x^3 - 13.0
+std::complex<double> fp(std::complex<double> x) { return (5.0 * std::pow(x, 4)) + (15.0 * std::pow(x, 2)); }  // derivative of f
 
 int newt(std::complex<double> x0) {
   for (int i = 0; i < 256; ++i) {
