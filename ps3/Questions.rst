@@ -8,15 +8,20 @@ argv
 ----
 
 1. What does `argv[0]` always contain?
+The variable 'argv[0]' always contains the first command that is typed into the command line. Therefore when you type the command to run a program such as './repeat.exe' then argv[0] will be equal to './repeat.exe'.
 
 
 2. Which entry of `argv` holds the first argument passed to the program?
+The first argument that is passed to the program is contained in 'argv[1]' which is the second index of the array of pointers of argv.
 
 
 3. Which entry of `argv` holds the second argument passed to the program?
+The second argument that is passed to the program is contained in 'argv[2]' which is the third index in the array of pointers of argv.
 
 
 4. How would you print just the last argument passed to a program?
+You could print just the last argument passed to a program by subracting one index from the number of arguments passed in that is saved in 'argc'. Therefore, to print the last argument you could use a command such as 'std::cout << "Last argument is : " << argv[argc-1] << std::endl;'. 
+
 
 float vs double
 ----------------
@@ -24,11 +29,14 @@ float vs double
 5.  What is the difference (ratio) in execution times 
 between single and double precision for    *construction with no optimization*? Explain.
 
+
 6.  What is the difference (ratio) in execution times
 between single and double precision for    *multiplication with no optimization*? Explain.
 
+
 7.  What is the difference (ratio) in execution times 
 between single and double precision for    *construction with optimization*? Explain.
+
 
 8.  What is the difference (ratio) in execution times 
 between single and double precision for    *multiplication with optimization*? Explain. 

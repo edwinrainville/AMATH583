@@ -7,10 +7,11 @@
 //
 
 #include <iostream>
+#include <cstdlib>
 
 int main(int argc, char* argv[])  {
 
-  int size = argv[1];
+  int size = std::atoi(argv[1]);
 
   std::cout << "size is " << size << std::endl;
 
