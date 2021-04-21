@@ -73,7 +73,11 @@ double inf_norm(const Matrix& x);
 
 double f_norm(const Matrix& A) {
   double sum = 0;
-  // WRITE ME
+  for (size_t j = 0; j < A.num_cols(); ++j) {
+    for (size_t i = 0; i < A.num_rows(); ++i) {
+      sum += std::pow(A(i, j), 2);
+    }
+  }
   return std::sqrt(sum);
 }
 
@@ -90,8 +94,14 @@ Matrix operator+(const Matrix& A, const Matrix& B) {
 }
 
 Matrix operator-(const Matrix& A, const Matrix& B) {
+  assert(A.num_rows() == B.num_rows());
+  assert(A.num_cols() == B.num_cols());
   Matrix C(A.num_rows(), A.num_cols());
-  // WRITE ME (including assertions)
+  for (size_t i = 0; i < A.num_rows(); ++i) {
+    for (size_t j = 0; j < A.num_cols(); ++j) {
+      C(i,j) = A(i, j) - B(i, j);
+    }
+  }
   return C;
 }
 
@@ -121,10 +131,12 @@ void   matmat(const Matrix& A, const Vector& B, Matrix& C);
 
 
 Matrix transpose(const Matrix& A) {
-  Matrix B ( 0, 0 /* fix me */ );
-
-  // WRITE ME
-
+  Matrix B ( A.num_cols(), A.num_rows());
+  for (size_t i = 0; i < A.num_rows(); ++i) {
+    for (size_t j = 0; j < A.num_cols(); ++j) {
+    B(j, i) = A(i, j);
+    }
+  }
   return B;
 }
 
@@ -241,7 +253,7 @@ void mult_trans_0(const Matrix& A, const Matrix& B, Matrix& C) {
   for (size_t i = 0; i < C.num_rows(); ++i) {
     for (size_t j = 0; j < C.num_cols(); ++j) {
       for (size_t k = 0; k < A.num_cols(); ++k) {
-        // WRITE ME
+        C(i, j) += A(i, k) * B(j, k);
       }
     }
   }
@@ -257,7 +269,7 @@ void mult_trans_1(const Matrix& A, const Matrix& B, Matrix& C) {
     for (size_t j = 0; j < C.num_cols(); ++j) {
       double t = C(i, j);
       for (size_t k = 0; k < A.num_cols(); ++k) {
-        // WRITE ME
+        t += A(i, k) * B(j, k);
       }
       C(i, j) = t;
     }
@@ -272,7 +284,21 @@ void mult_trans_2(const Matrix& A, const Matrix& B, Matrix& C) {
 
   for (size_t i = 0; i < C.num_rows(); i += 2) {
     for (size_t j = 0; j < C.num_cols(); j += 2) {
-      // WRITE ME
+      double t00 = C(i, j);
+      double t01 = C(i, j + 1);
+      double t10 = C(i + 1, j);
+      double t11 = C(i + 1, j + 1);
+
+      for (size_t k = 0; k < A.num_cols(); ++k) {
+        t00 += A(i, k) * B(j, k);
+        t01 += A(i, k) * B(j + 1, k);
+        t10 += A(i + 1, k) * B(j, k);
+        t11 += A(i + 1, k) * B(j + 1, k);
+      }
+      C(i, j)         = t00;
+      C(i, j + 1)     = t01;
+      C(i + 1, j)     = t10;
+      C(i + 1, j + 1) = t11;
     }
   }
 }
@@ -294,7 +320,22 @@ void mult_trans_3(const Matrix& A, const Matrix& B, Matrix& C) {
 
         for (size_t i = ii; i < stop_i; i += 2) {
           for (size_t j = jj; j < stop_j; j += 2) {
-	    // WRITE ME
+            double t00 = C(i, j);
+            double t01 = C(i, j + 1);
+            double t10 = C(i + 1, j);
+            double t11 = C(i + 1, j + 1);
+
+            for (size_t k = kk; k < stop_k; ++k) {
+              t00 += A(i, k) * B(j, k);
+              t01 += A(i, k) * B(j + 1, k);
+              t10 += A(i + 1, k) * B(j, k);
+              t11 += A(i + 1, k) * B(j + 1, k);
+            }
+
+            C(i, j)         = t00;
+            C(i, j + 1)     = t01;
+            C(i + 1, j)     = t10;
+            C(i + 1, j + 1) = t11;
           }
         }
       }
@@ -317,8 +358,23 @@ void mult_trans_4(const Matrix& A, Matrix& C) {
 
         for (size_t i = ii; i < stop_i; i += 2) {
           for (size_t j = jj; j < stop_j; j += 2) {
-	    // WRITE ME
-	  }
+            double t00 = C(i, j);
+            double t01 = C(i, j + 1);
+            double t10 = C(i + 1, j);
+            double t11 = C(i + 1, j + 1);
+
+            for (size_t k = kk; k < stop_k; ++k) {
+              t00 += A(i, k) * A(j, k);
+              t01 += A(i, k) * A(j + 1, k);
+              t10 += A(i + 1, k) * A(j, k);
+              t11 += A(i + 1, k) * A(j + 1, k);
+            }
+
+            C(i, j)         = t00;
+            C(i, j + 1)     = t01;
+            C(i + 1, j)     = t10;
+            C(i + 1, j + 1) = t11;
+	        }
         }
       }
     }
@@ -330,5 +386,11 @@ void mult_trans_5(const Matrix& A, const Matrix& B, Matrix& C) {
   assert(B.num_rows() == C.num_cols());
   assert(A.num_cols() == B.num_cols());
 
-  // WRITE ME for Extra Credit
+  for (size_t i = 0; i < C.num_rows(); ++i) {
+    double t = C(i, i);
+    for (size_t k = 0; k < A.num_cols(); ++k) {
+      t += A(i, k) * B(k, i);
+    }
+    C(i, i) = t;
+  }
 }
