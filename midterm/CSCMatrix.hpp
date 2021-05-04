@@ -83,7 +83,16 @@ public:
   }
 
   void matmat(const Matrix& B, Matrix& C) const {
-    // Write me
+    // Loop through each column of Matrix A, k
+    for (size_t k = 0; k < num_cols_; ++k) {
+      // Loop through each row of Matrix A, i
+      for (size_t i = col_indices_[k]; i < col_indices_[k + 1]; ++i) {
+        // Loop through each row of Matrix B, j
+        for (size_t j = 0; j < B.num_cols(); ++j){
+          C(row_indices_[i], j) += storage_[i] * B(k, j);
+        }
+      }
+    }
   }
 
 private:

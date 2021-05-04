@@ -67,8 +67,10 @@ public:
   }
 
   void matvec(const Vector& x, Vector& y) const {
+    // Loop through each row index, i
     for (size_t i = 0; i < num_rows_; ++i) {
       double t = y(i);
+      // Loop through each column index, j
       for (size_t j = row_indices_[i]; j < row_indices_[i + 1]; ++j) {
         t += storage_[j] * x(col_indices_[j]);
       }
@@ -77,7 +79,9 @@ public:
   }
 
   void t_matvec(const Vector& x, Vector& y) const {
+    // Loop through each row index, i
     for (size_t i = 0; i < num_rows_; ++i) {
+      // Loop through each column index, j
       for (size_t j = row_indices_[i]; j < row_indices_[i + 1]; ++j) {
         y(col_indices_[j]) += storage_[j] * x(i);
       }
@@ -85,7 +89,16 @@ public:
   }
 
   void matmat(const Matrix& B, Matrix& C) const {
-    // Write Me 
+    // Loop through each row index of Matrix A, i
+    for (size_t i = 0; i < num_rows_; ++i) {
+      // Loop through each column index of Matrix A, j
+      for (size_t k = row_indices_[i]; k < row_indices_[i + 1]; ++k) {
+        // Loop through each column of Matrix B
+        for (size_t j = 0; j < B.num_cols(); ++j) {
+          C(i, j) += storage_[k] * B(col_indices_[k], j);
+        }
+      }
+    }
   }
 
 private:

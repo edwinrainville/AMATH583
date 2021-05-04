@@ -52,8 +52,10 @@ public:
   }
 
   void matvec(const Vector& x, Vector& y) const {
+    // Access each element, m, in the storage array
     for (size_t m = 0; m < storage_.size(); ++m){
       element aik = storage_[m];
+      // Access row, column and value information from each struct in storage array
       y(std::get<0>(aik)) += std::get<2>(aik) * x(std::get<1>(aik)); 
     }       
   }
@@ -61,12 +63,18 @@ public:
   void t_matvec(const Vector& x, Vector& y) const {
     for (size_t m = 0; m < storage_.size(); ++m){
       element aik = storage_[m];
+      // Same as above but now y is indexed to the column and x is indexed to the row
       y(std::get<1>(aik)) += std::get<2>(aik) * x(std::get<0>(aik)); 
     }       
   }
 
   void matmat(const Matrix& B, Matrix& C) const {
-    // Write Me 
+    for (size_t m = 0; m < storage_.size(); ++m){
+      element aik = storage_[m];
+      for (size_t j = 0; j < B.num_cols(); ++j) {
+        C(std::get<0>(aik), j) += std::get<2>(aik) * B(std::get<1>(aik), j);
+      }
+    }
   }
 
 private:
