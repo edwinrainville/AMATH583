@@ -124,8 +124,27 @@ cnorm
 
 * How much parallel speedup do you see for 1, 2, 4, and 8 threads?
 
+The performance values for thee cyclic norm are shown in the following table. 
+
+           N  Sequential    1 thread   2 threads   4 threads   8 threads      1 thread     2 threads     4 threads     8 threads
+     1048576     4.24717     1.59436     2.80785      3.7438     3.50982   1.65393e-14   1.00005e-14    9.6159e-16   2.30782e-15
+     2097152     5.30264     1.35193     2.85869     3.66814     3.21827   8.15822e-15    8.7021e-15   4.21508e-15   4.89493e-15
+     4194304     4.92289     1.31565     2.92082     3.86928     2.99593   3.82713e-14   3.07709e-15   2.69245e-15   2.30782e-15
+     8388608     4.78298      1.1336     3.02922     4.00926     2.78194   1.41388e-14   1.22355e-15    2.1752e-15   7.34131e-15
+    16777216     4.27056     1.68979     3.05835      4.0778     2.66305   4.74941e-14   1.17293e-14   2.26895e-14   3.84567e-15
+    33554432     4.18124     1.70327     3.08547      4.0672     2.34646   1.61807e-14     2.937e-14   1.31893e-14   7.47847e-15
+
+Here we see reduced performance using multiple threads compared to the sequential run. The speedup values for the smallest problem size
+for 1, 2, 4, and 8 threads are 0.375, 0.6609, 0.8815 and 0.826 respecively. Therefore, we are not gaining any speedup and actually losing
+performance by using this cyclic multithreaded formulation. 
+
+
 * How does the performance of cyclic partitioning compare to blocked?  Explain any significant differences, referring to, say, performance models or CPU architectural models.
 
+The perfomrance of cyclic partitioning is significnatly reduced compared to blocked partitioning as well as sequential runs. In order to understand this difference, we must go
+back to our models of hierarchical memory and memory storage. The benefit of blocked partitioning is that within each block the data are stored next to each other therefore the
+data can be quickly pipelined into the CPU within each task. However, with cyclic partioning the data is not stored directly next to each other and are 
+separted by the stride therefore more time must be spent accessing the data which reduces the performance as we see in the performance mearsurements above.  
 
 rnorm
 -----
@@ -140,6 +159,10 @@ General
 
 * For the different approaches to parallelization, were there any major differences in how much parallel speedup that you saw?
 
+For each different approach to parallelization we see 
+
+
+
 * You may have seen the speedup slowing down as the problem sizes got larger -- if you didn't keep trying larger problem sizes.  What is limiting parallel speedup for two_norm (regardless of approach)?  What would determine the problem sizes where you should see ideal speedup?  (Hint: Roofline model.)
 
 
@@ -147,6 +170,19 @@ Conundrum #1
 ------------
 
 1. What is causing this behavior?
+
+When running the block partitioned norm function on smaller problem sizes of 128 and 256 we see that the performance is drastically reduced for the multi-threaded 
+algorithm but is much faster for the sequential run. The perfromance values are shown in the following table. 
+        
+           N  Sequential    1 thread   2 threads   4 threads   8 threads      1 thread     2 threads     4 threads     8 threads
+         128     14.0845   0.0105298  0.00730616  0.00399032  0.00217016             0             0             0             0
+         256     26.3159   0.0211807   0.0153037  0.00869507  0.00434946             0             0   1.94081e-16   1.94081e-16
+
+Here we see that the performance of the sequential run is significantly faster than the performance of the multithreaded runs for both sizes. Thinking back to the 
+hierarchical memory model that we have, we can understand why the sequential run would have improved performance. Since these are relatively small problems, we expect
+that the data can fit into the cache and therefore data access time can be reduced thus improving the overall performance. The reduced performance in the threads however
+is most likely due to 
+
 
 2. How could this behavior be fixed?
 

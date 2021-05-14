@@ -24,10 +24,32 @@
 #include <string>
 #include <thread>
 
-// Write me
-double cyclic_two_norm(const Vector& x, size_t partitions) {
-  double sum = 0.0;
+// Define worker function with 
+double worker_a(const Vector& x, size_t begin, size_t end, size_t partitions) {
+  size_t stride = partitions;
+  double partial_x = 0.0;
+  // Loop through each element and update the sum of squares
+  for (size_t i = begin; i < end; i += stride){
+    partial_x += x(i) * x(i); 
+  }
+  return partial_x;
+}
 
+// Define Cyclic norm using asynchronous tasks 
+double cyclic_two_norm(const Vector& x, size_t partitions) {
+  // Vector of futures
+  std::vector<std::future<double>> futures_;
+
+  // Launch asynchronous tasks
+  for (size_t p = 0; p < partitions; ++p) {
+    futures_.push_back(std::async(std::launch::async, worker_a, std::cref(x), p, x.num_rows(), partitions));
+  }
+  
+  // Get Values from asynchronous tasks and combine to get total sum
+  double sum = 0.0;
+  for (size_t p = 0; p < partitions; ++p) {
+    sum += futures_[p].get();
+  } 
   return std::sqrt(sum);
 }
 
